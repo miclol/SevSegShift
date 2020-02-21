@@ -67,7 +67,7 @@ Example diagram for Shift Register usage see [The SevSegShift_Counter Example][6
 
 ## Software
 
-To install, copy the SevSeg folder into your arduino sketchbook\-libraries folder. More detailed instructions are [here][4].
+To install, copy the SevSegShift folder into your arduino sketchbook\-libraries folder. More detailed instructions are [here][4].
 The Library Manager can be used from arduino version 1.6.2.
 
 
@@ -178,5 +178,5 @@ limitations under the License.
 [2]: https://en.wikipedia.org/wiki/File:7_segment_display_labeled.svg
 [3]: http://www.ebay.com/sch/i.html?LH_BIN=1&_from=R40&_sacat=0&_nkw=7+segment+display+4+digit+2+pcs&_sop=15
 [4]: http://arduino.cc/en/Guide/Libraries
-[5]: https://github.com/bridystone/SevSeg
-[6]: https://github.com/bridystone/SevSeg/blob/ShiftRegister/examples/SevSegShift_Counter/SevSegShift.png
+[5]: https://github.com/bridystone/SevSegShift
+[6]: https://github.com/bridystone/SevSegShift/blob/ShiftRegister/examples/SevSegShift_Counter/SevSegShift.png
