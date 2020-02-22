@@ -1,8 +1,13 @@
 # SevSegShift
 
-This library adds the functionality of a Shift Register to the original SevSeg library by Dean Reading. Most functionality is the same as the orginial Library. It only inherits the class and adds the Shift Register functionality where required.
+This library adds the functionality of a Shift Register to the original [SevSeg library  by Dean Reading][1]. Most functionality is the same as the orginial Library. You can even use the basic class from this lbrary. It only inherits the class and adds the Shift Register functionality where required.
 
-In addition to the Common Shift Registers this library supports everything the original library supports.
+## Shift Register usage on 7-Segment-Displays
+Advantage of the use with Shift Registers is the limited usage of Arduino PINs. You will only require 3 Arduino PINS (and 5V & Gnd). Everything else will be done on the Shift Registers. 
+An Implementation without Shift Registers requires i.e. on a 4-digit 7 Segment Display 12 PINs to be connected to the Arduino.
+
+## SevSeg support
+In addition to the Shift Registers this library supports everything the original library supports. 
 It supports common cathode and common anode displays, and the use of switching transistors. Numbers can be displayed in decimal or hexadecimal representation, with decimal places. Characters can be displayed (as accurately as possible). It also supports multiple displays, of varying dimensions. 
 
 [Download it from GitHub][5].
@@ -18,12 +23,17 @@ Your display should have:
 *   **Digit Pins** \- One for each digit. These are the 'common pins'. They will be cathodes (negative pins) for common cathode displays, or anodes (positive pins) for common anode displays.
 *   **8 Segment Pins** \- One for each of the seven segments plus the decimal point.
 
-Shift Register
+### Shift Registers
+For a 4-Digit-Display with 12 PINS, you should use:
 *   **2 Shift Registers** \- to be used with the 12 necessary connections pins of the 7 Segment display
 
 
 ### Arduino connections
 
+For the *Shift Register configuration* 5V, GND and 3 PINs of Arduino are connected to the Shift Registers. The PINs of the Shift Registers are connected to the 12 PINs of the Seven Segment Display.
+see [The SevSegShift_Counter Example][6].
+
+For the *normal configuration* (SevSeg without Shift):
 All digit pins and segment pins can be connected to any of the Arduino's digital pins, or analog pins with digital support; just make sure you take note of your connections! Analog pins on most Arduinos have digital support, but the Arduino Nano is an exception.
 
 
@@ -63,6 +73,7 @@ Top Row:    1 A F  2 3 B
 Bottom Row: E D DP C G 4
 ```
 
+#### Configuraiton layout with shift registers
 Example diagram for Shift Register usage see [The SevSegShift_Counter Example][6].
 
 ## Software
@@ -76,16 +87,24 @@ The Library Manager can be used from arduino version 1.6.2.
 ```c++
 #include "SevSegShift.h"
 
-#define SHIFT_PIN_DS   10
-#define SHIFT_PIN_STCP 11
-#define SHIFT_PIN_SHCP 12
+#define SHIFT_PIN_DS   10 /* Data input PIN */
+#define SHIFT_PIN_STCP 11 /* Shift Register Storage PIN */
+#define SHIFT_PIN_SHCP 12 /* Shift Register Shift PIN */
 
 SevSegShift sevseg(SHIFT_PIN_DS, SHIFT_PIN_SHCP, SHIFT_PIN_STCP); //Instantiate a seven segment controller object
+
+/* instance without Shift registers would be:
+SevSeg sevseg;
+*/
 
 void setup() {
   byte numDigits = 4;
   byte digitPins[] = {8+2, 8+5, 8+6, 2}; // of ShiftRegister(s) | 8+x (2nd Register)
   byte segmentPins[] = {8+3, 8+7, 4, 6, 7, 8+4, 3,  5}; // of Shiftregister(s) | 8+x (2nd Register)
+  /* configuration without ShiftRegister - Direct arduino connection
+  byte digitPins[] = {2, 3, 4, 5}; // PINs of Arduino
+  byte segmentPins[] = {6, 7, 8, 9, 10, 11, 12, 13}; // PINs of Arduino
+  */
   bool resistorsOnSegments = false; // 'false' means resistors are on digit pins
   byte hardwareConfig = COMMON_ANODE; // See README.md for options
   bool updateWithDelays = false; // Default 'false' is Recommended
@@ -97,9 +116,11 @@ void setup() {
   ...
 }
 ```
-
-`digitPins` is an array that stores the ShiftRegister pin numbers that the digits are connected to. Order them from left to right.
-`segmentPins` is an array that stores the Shift Register pin numbers that the segments are connected to. Order them from segment a to g, then the decimal place (if it's connected).
+`SHIFT_PIN_DS` defines the PIN the DS-PIN of the 1st Shift Register is connected to
+`SHIFT_PIN_SHCP` defines the PIN the SH_CP PIN of both Shift Registers are conncted to
+`SHIFT_PIN_STCP` defines the PIN the ST_CP PIN of both Shift Registers are conncted to
+`digitPins` is an array that stores the Shift Register pin numbers that the digits (D1, D2, D3, D4) are connected to. Order them from left to right.
+`segmentPins` is an array that stores the Shift Register pin numbers that the segments (A, B, C, D, E, F, G, DP) are connected to. Order them from segment a to g, then the decimal place (if it's connected).
 If you wish to use more than 8 digits, increase MAXNUMDIGITS in SevSeg.h.
 
 
