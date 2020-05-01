@@ -29,7 +29,8 @@ SevSegShift::SevSegShift(
   byte pinDS, 
   byte pinSHCP, 
   byte pinSTCP,
-  const byte numberOfShiftRegisters // currently const value (not changeable) - maybe in future
+  const byte numberOfShiftRegisters, // currently const value (not changeable) - maybe in future
+  bool isDigitsOnController // only Segments are on ShiftRegister - DigitPins are connected to controller
 ) : SevSeg() { // call constructor of base class
   // store data in member variables
   _pinDS = pinDS;
@@ -44,6 +45,7 @@ SevSegShift::SevSegShift(
   // assume that the shift registers have 8 output ports
   _shiftRegisterMap = new byte[8*numberOfShiftRegisters];
   _numberOfShiftRegisters = numberOfShiftRegisters;
+  _isDigitsOnController = isDigitsOnController;
 }
 
 void SevSegShift::begin(
@@ -89,8 +91,13 @@ void SevSegShift::segmentOn(byte segmentNum) {
   // digitalWrite(segmentPins[segmentNum], segmentOnVal);
   for (byte digitNum = 0 ; digitNum < numDigits ; digitNum++) {
     if (digitCodes[digitNum] & (1 << segmentNum)) { // Check a single bit
-      _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOnVal; // replace digital Write with prepareing the Shift Register Map
-      //digitalWrite(digitPins[digitNum], digitOnVal);
+
+      if(!_isDigitsOnController) { // are digit PINs on ShiftRegister or directly on Controller
+        _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOnVal; // replace digital Write with prepareing the Shift Register Map
+      } else { // digital Pins are directly on controller
+        digitalWrite(_shiftRegisterMapDigits[digitNum], digitOnVal);
+      }
+
     }
   }
 
@@ -104,8 +111,11 @@ void SevSegShift::segmentOn(byte segmentNum) {
 // (almost copy from the SevSeg.cpp)
 void SevSegShift::segmentOff(byte segmentNum) {
   for (byte digitNum = 0 ; digitNum < numDigits ; digitNum++) {
-    _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOffVal;     // replace digital Write with prepareing the Shift Register Map
-    //digitalWrite(digitPins[digitNum], digitOffVal);
+    if(!_isDigitsOnController) { // are digit PINs on ShiftRegister or directly on Controller
+      _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOffVal;     // replace digital Write with prepareing the Shift Register Map
+    } else { // digital Pins are directly on controller
+      digitalWrite(_shiftRegisterMapDigits[digitNum], digitOffVal);
+    }
   }
   _shiftRegisterMap[ _shiftRegisterMapSegments[segmentNum] ] = segmentOffVal;   // replace digital Write with prepareing the Shift Register Map
   //digitalWrite(segmentPins[segmentNum], segmentOffVal);
@@ -120,8 +130,12 @@ void SevSegShift::segmentOff(byte segmentNum) {
 // (according to digitCodes[])
 // (almost copy from the SevSeg.cpp)
 void SevSegShift::digitOn(byte digitNum){
-  _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOnVal; // replace digital Write with prepareing the Shift Register Map
-  // digitalWrite(digitPins[digitNum], digitOnVal);
+  if(!_isDigitsOnController) { // are digit PINs on ShiftRegister or directly on Controller
+    _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOnVal; // replace digital Write with prepareing the Shift Register Map
+  } else { // digital Pins are directly on controller
+    digitalWrite(_shiftRegisterMapDigits[digitNum], digitOnVal);
+  }
+
   for (byte segmentNum = 0 ; segmentNum < numSegments ; segmentNum++) {
     if (digitCodes[digitNum] & (1 << segmentNum)) { // Check a single bit
       _shiftRegisterMap[ _shiftRegisterMapSegments[segmentNum] ] = segmentOnVal; // replace digital Write with prepareing the Shift Register Map
@@ -139,13 +153,17 @@ void SevSegShift::digitOn(byte digitNum){
 // Turns a digit off, as well as all segment pins
 // (almost copy from the SevSeg.cpp)
 void SevSegShift::digitOff(byte digitNum){
+  if(!_isDigitsOnController) { // are digit PINs on ShiftRegister or directly on Controller
+    _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOffVal; // replace digital Write with prepareing the Shift Register Map
+  } else { // digital Pins are directly on controller
+    digitalWrite(_shiftRegisterMapDigits[digitNum], digitOffVal);
+  }
+
   for (byte segmentNum = 0 ; segmentNum < numSegments ; segmentNum++) {
     _shiftRegisterMap[ _shiftRegisterMapSegments[segmentNum] ] = segmentOffVal; // replace digital Write with prepareing the Shift Register Map
     // digitalWrite(segmentPins[segmentNum], segmentOffVal);
   }
-  _shiftRegisterMap[ _shiftRegisterMapDigits[digitNum] ] = digitOffVal; // replace digital Write with prepareing the Shift Register Map
-  // digitalWrite(digitPins[digitNum], digitOffVal);
-
+  
   // NOW perform the actual digitalWrite to the Shift Register(s)
   pushData2ShiftRegister();
 }

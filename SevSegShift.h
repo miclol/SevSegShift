@@ -36,7 +36,8 @@ public:
     byte pinDS, 
     byte pinSHCP, 
     byte pinSTCP,
-    const byte numberOfShiftRegisters = 2 // currently const value (not changeable) - maybe in future
+    const byte numberOfShiftRegisters = 2, // currently const value (not changeable) - maybe in future
+    bool isDigitsOnController=false // only Segments are on ShiftRegister - DigitPins are connected to controller
   );
 
   /*
@@ -73,6 +74,7 @@ private:
   byte _pinDS;
   byte _pinSHCP;
   byte _pinSTCP;
+  bool _isDigitsOnController;
 
   // which ports of the Shift Registers are used for which purpose
   byte *_shiftRegisterMapDigits;
