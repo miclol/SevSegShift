@@ -68,6 +68,13 @@ void SevSegShift::begin(
   // dummy port for initialization (pin of DS is used - and will be set for OUTPUT multiple times ;) )
   byte dummyDigitPINs[8] = {_pinDS,_pinDS,_pinDS,_pinDS,_pinDS,_pinDS,_pinDS,_pinDS};
 
+  // set controller PINs to output if these are controlled directly
+  if (_isDigitsOnController) {
+    for (int i=0; i<numDigitsIn;i++) {
+      pinMode(_shiftRegisterMapDigits[i], OUTPUT);
+    }
+  }
+
   // call begin-function of the base class to prepare everything properly
   SevSeg::begin(
     hardwareConfig, 
