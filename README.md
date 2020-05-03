@@ -37,7 +37,7 @@ For the *Shift Register configuration* 5V, GND and 3 PINs of Arduino are connect
 
 see [The SevSegShift_Counter Example][6].
 
-For the Hybrid *Shift Register configuration* 5V, GND and 3 PINs of Arduino are connected to the Shift Registers. The PINs of the Shift Registers are connected to the 8 Segment-PINs of the Seven Segment Display. The Digit-PINs are connected to the Arduino PINs.
+For the *Hybrid Shift Register configuration* 5V, GND and 3 PINs of Arduino are connected to the Shift Registers. The PINs of the Shift Registers are connected to the 8 Segment-PINs of the Seven Segment Display. The Digit-PINs are connected to the Arduino PINs.
 
 see [The SevSegShiftOne_Counter Example][7].
 
@@ -82,8 +82,10 @@ Top Row:    1 A F  2 3 B
 Bottom Row: E D DP C G 4
 ```
 
-#### Configuraiton layout with shift registers
-Example diagram for Shift Register usage see [The SevSegShift_Counter Example][6].
+#### Configuration layout with shift registers
+Example diagram for 2 Shift Register usage see [The SevSegShift_Counter Example][6].
+
+Example diagram for 1 Shift Register usage (Hybrid confihuration) see [The SevSegShiftOne_Counter Example][7].
 
 ## Software
 
@@ -131,7 +133,7 @@ void setup() {
 * `digitPins` is an array that stores the Shift Register pin numbers that the digits (D1, D2, D3, D4) are connected to. Order them from left to right.
 * `segmentPins` is an array that stores the Shift Register pin numbers that the segments (A, B, C, D, E, F, G, DP) are connected to. Order them from segment a to g, then the decimal place (if it's connected).
 
-### Setting up (1 Shift Registers)
+### Setting up Hybird (1 Shift Registers)
 
 ```c++
 #include "SevSegShift.h"
