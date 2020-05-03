@@ -3,8 +3,12 @@
 ## [3.4.3](https://github.com/bridystone/SevSegShift/releases/tag/v3.4.3) (2020-05-04)
 
 ### Added
-*   new functionality:  Usage with only one Shift Register for segment pins
-*                       Digit Pins are connected to the Arduino PINs directly
+new functionality: 
+Usage with only one Shift Register for segment pins
+digit pins are connected to the Arduino PINs directly
+
+### Updated
+documentation fixes (Thanks to @omnilord)
 
 ## [3.4.2](https://github.com/bridystone/SevSegShift/releases/tag/v3.4.2) (2020-02-22)
 
