@@ -98,9 +98,9 @@ The Library Manager can be used from arduino version 1.6.2.
 ```c++
 #include "SevSegShift.h"
 
-#define SHIFT_PIN_DS   10 /* Data input PIN */
-#define SHIFT_PIN_STCP 11 /* Shift Register Storage PIN */
-#define SHIFT_PIN_SHCP 12 /* Shift Register Shift PIN */
+#define SHIFT_PIN_DS   13 /* Data input PIN */
+#define SHIFT_PIN_STCP 12 /* Shift Register Storage PIN */
+#define SHIFT_PIN_SHCP 11 /* Shift Register Shift PIN */
 
 SevSegShift sevseg(SHIFT_PIN_DS, SHIFT_PIN_SHCP, SHIFT_PIN_STCP); //Instantiate a seven segment controller object (with Shift Register functionality)
 
