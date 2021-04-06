@@ -15,6 +15,9 @@ It supports common cathode and common anode displays, and the use of switching t
 
 [original library here][1].
 
+#### Note on shift registers
+It's often preferred to drive seven segment displays through shift register chips, as that only uses ~3 micrcontroller pins instead of ~12 pins. This library does not support shift registers. However, there's a mostly-compatible branch that does support shift registers.
+See [bridystone's SevSegShift][5].
 
 ## Hardware
 
@@ -181,24 +184,23 @@ If you wish to use more than 8 digits, increase MAXNUMDIGITS in SevSeg.h.
 
 
 ### Setting a number
-
+#### Integer
 ```c++
 sevseg.setNumber(3141,3); // Displays '3.141'
 ```
-
 The first argument is the number to display. The second argument indicates where the decimal place should be, counted from the least significant digit. E.g. to display an integer, the second argument is 0.
-Floats are supported. In this case, the second argument indicates how many decimal places of precision you want to display. E.g:
 
+#### Floating point
 ```c++
-sevseg.setNumber(3.14159f,3); //Displays '3.141'
+sevseg.setNumberF(3.14159f,3); //Displays '3.141'
 ```
+Floats are supported. In this case, the second argument indicates how many decimal places of precision you want to display.
 
-Out of range numbers are shown as '----'.
+Note that:
 
-If the second argument is -1 or omitted, there will be no decimal place.
-
-Enter 'true' as the third agument to display the number in hexadecimal representation.
-
+ - Out of range numbers are shown as '----'. 
+ - If the second argument is -1 or omitted, there will be no decimal place. 
+ - Enter 'true' as the third argument to display the number in hexadecimal representation (instead of decimal)
 
 ### Setting a character string
 
@@ -237,19 +239,28 @@ Results will vary for each implementation. The brightness seen depends on the di
 
 ## License
 
-Copyright 2019 Dean Reading, Copyright 2020 Jens Breidenstein
+MIT License
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-http://www.apache.org/licenses/LICENSE-2.0
+Copyright (c) 2020 Dean Reading, 
+Copyright (c) 2020 Jens Breidenstein (SevSegShift part)
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 [1]: https://github.com/DeanIsMe/SevSeg
 [2]: https://en.wikipedia.org/wiki/File:7_segment_display_labeled.svg

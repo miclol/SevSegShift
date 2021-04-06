@@ -1,7 +1,8 @@
 # Change Log
-
+## [3.6.1](https://github.com/bridystone/SevSegShift/releases/tag/v3.6.1)
+### Updated
+upgraded to SevSeg 3.6.0 - details in [SevSeg 3.6.0](https://github.com/DeanIsMe/SevSeg/releases/tag/v3.6.0)
 ## [3.4.3](https://github.com/bridystone/SevSegShift/releases/tag/v3.4.3) (2020-05-04)
-
 ### Added
 new functionality: 
 Usage with only one Shift Register for segment pins
