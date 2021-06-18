@@ -41,9 +41,9 @@ void setup() {
   bool leadingZeros = false; // Use 'true' if you'd like to keep the leading zeros
   bool disableDecPoint = false; // Use 'true' if your decimal point doesn't exist or isn't connected
   
-  sevseg.begin(hardwareConfig, numDigits, digitPins, segmentPins, resistorsOnSegments,
+  sevsegshift.begin(hardwareConfig, numDigits, digitPins, segmentPins, resistorsOnSegments,
   updateWithDelays, leadingZeros, disableDecPoint);
-  sevseg.setBrightness(90);
+  sevsegshift.setBrightness(90);
 }
 
 void loop() {
@@ -57,10 +57,10 @@ void loop() {
     if (deciSeconds == 10000) { // Reset to 0 after counting for 1000 seconds.
       deciSeconds=0;
     }
-    sevseg.setNumber(deciSeconds, 1);
+    sevsegshift.setNumber(deciSeconds, 1);
   }
 
-  sevseg.refreshDisplay(); // Must run repeatedly
+  sevsegshift.refreshDisplay(); // Must run repeatedly
 }
 
 /// END ///
