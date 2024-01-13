@@ -433,6 +433,16 @@ void SevSeg::setSegments(const uint8_t segs[]) {
   }
 }
 
+// setSegmentsDigit
+/******************************************************************************/
+// Like setSegments above, but only manipulates the segments for one digit
+// digitNum is 0-indexed.
+void SevSeg::setSegmentsDigit(const uint8_t digitNum, const uint8_t segs) {
+  if (digitNum < numDigits) {
+    digitCodes[digitNum] = segs;
+  }
+}
+
 // getSegments
 /******************************************************************************/
 // Gets the 'digitCodes' of currently displayed segments.
