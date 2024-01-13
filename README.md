@@ -225,6 +225,17 @@ To blank the display, call:
 sevseg.blank();
 ```
 
+### Custom display setting
+```c++
+// Set the segments for every digit on the display
+uint8_t segs[4] = {0, 0x5B, 0x6D, 0x63};
+sevseg.setSegments(segs);
+```
+```c++
+// Set the segments for a single digit. Set digit 3 to 0x63. 
+sevseg.setSegmentsDigit(3, 0x63);
+```
+You can manipulate individual segments if needed. Each byte represents the display of a single digit, with each bit representing a single segment. The bits represent segments in the order .GFEDCBA. See SevSeg.cpp for more examples of these 'digitCodes'.
 
 ### Setting the brightness
 
